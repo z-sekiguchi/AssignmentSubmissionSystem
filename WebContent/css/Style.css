@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+}
+
+header {
+	background-color: #B62536;
+	background:linear-gradient(red, #B62536);
+	display: flex;
+}
+
+header img {
+	margin-bottom: 5px;
+	background-color: #FFFFFF;
+	height: 60px;
+	width: 60px;
+	border-radius: 0 0 5px 0;
+	padding: 3px;
+}
+
+header h1 {
+	margin: auto 10px;
+	-webkit-text-stroke: 1px #FFFFFF;
+	text-stroke: 0.5px #FFFFFF;
+}
+
+header .loginUserInfo {
+	margin: 5px 10px 5px auto;
+	padding: 0 5px;
+	text-align: center;
+	background-color: white;
+	border: solid 1px;
+	text-align: center;
+	display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+header .loginUserInfo p {
+	margin: 0px;
+}
+
+.main {
+	margin: 20px;
+}
