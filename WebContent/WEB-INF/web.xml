@@ -19,4 +19,24 @@
     <servlet-name>Template</servlet-name>
     <url-pattern>/Template</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Login</display-name>
+    <servlet-name>Login</servlet-name>
+    <servlet-class>controller.Login</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/Login</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>StudentsList</display-name>
+    <servlet-name>StudentsList</servlet-name>
+    <servlet-class>controller.StudentsList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StudentsList</servlet-name>
+    <url-pattern>/StudentsList</url-pattern>
+  </servlet-mapping>
 </web-app>

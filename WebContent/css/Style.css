@@ -103,3 +103,42 @@ span.menuSize {
 main {
 	padding: 10px;
 }
+
+form.login {
+	width: 400px;
+	height: 300px;
+	border: solid 1px;
+	border-radius: 5px;
+	margin: auto;
+	margin-top: 50px;
+	text-align: center;
+}
+
+form.login h2 {
+	background-color: #cf2e2e;
+	border-radius: 4px 4px 0 0;
+	border-bottom: solid 1px;
+	-webkit-text-stroke: 0.3px #FFFFFF;
+	text-stroke: 0.5px #FFFFFF;
+	text-align: center;
+}
+
+form.login div {
+	margin-top: 20px;
+	background-color: yellow;
+	vertical-align: middle;
+}
+
+form.login label {
+	font-weight: bold;
+	text-align: left;
+	display: block;
+	margin-left: 70px;
+}
+
+form.login div.loginId input, div.loginPassword input {
+	font-size: 18px;
+	height: 20px;
+	width: 250px;
+	padding: 3px;
+}
