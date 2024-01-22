@@ -391,9 +391,10 @@ public class UserDao {
 				// UserBeanクラスのインスタンスを生成
 				UserBean ub = new UserBean();
 				// フィールドに値をセットする
-				ub.setId(rs.getString(1));			// ユーザーID
-				ub.setName(rs.getString(3));		// ユーザー名
-				ub.setPrivilege(rs.getInt(4));		// 権限
+				ub.setId(rs.getString(1));				// ユーザーID
+				ub.setName(rs.getString(3));			// ユーザー名
+				ub.setPrivilege(rs.getInt(4));			// 権限
+				ub.setDateTime(rs.getTimestamp(5));		// 最終更新時刻
 				// ibをlistに加える
 				list.add(ub);
 			}
@@ -560,9 +561,10 @@ public class UserDao {
 			// カーソルを次のレコードに進める
 			rs.next();
 			// フィールドに値をセットする
-			ub.setId(rs.getString(1));		// ユーザーID
-			ub.setName(rs.getString(3));	// ユーザー名
-			ub.setPrivilege(rs.getInt(4));	// 権限
+			ub.setId(rs.getString(1));				// ユーザーID
+			ub.setName(rs.getString(3));			// ユーザー名
+			ub.setPrivilege(rs.getInt(4));			// 権限
+			ub.setDateTime(rs.getTimestamp(5));		// 最終更新時刻
 			// リザルトセットをクローズ
 			rs.close();
 		} catch (SQLException | ClassNotFoundException e) {
@@ -585,6 +587,22 @@ public class UserDao {
 	}
 
 	/**
+	 * ユーザー名の長さチェックメソッド
+	 *
+	 * @param name パスワード
+	 * @return trueまたはfalse 結果
+	 * @throws SQLException
+	 */
+	public boolean checkNameLength(String name) {
+		int len = name.length();
+		if(len > 20) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	/**
 	 * ユーザー名の形式チェックメソッド
 	 *
 	 * @param name ユーザー名
@@ -603,6 +621,52 @@ public class UserDao {
 
 		// 結果のreturn
 		return num;
+	}
+
+	/**
+	 * パスワードの長さチェックメソッド
+	 *
+	 * @param password パスワード
+	 * @return trueまたはfalse 結果
+	 * @throws SQLException
+	 */
+	public boolean checkPasswordLength(String password) {
+		int len = password.length();
+		if(len < 8 || 16 < len) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * パスワードの使用文字チェックメソッド
+	 *
+	 * @param password パスワード
+	 * @return trueまたはfalse 結果
+	 * @throws SQLException
+	 */
+	public boolean checkPasswordString(String password) {
+		if(!password.matches("^[a-zA-Z0-9!-/:-@\\[-`\\{-~]*$")) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * パスワードの英数の混在チェックメソッド
+	 *
+	 * @param password パスワード
+	 * @return trueまたはfalse 結果
+	 * @throws SQLException
+	 */
+	public boolean checkPasswordStringComb(String password) {
+		if(!(password.matches(".*[0-9].*") && password.matches(".*[a-zA-Z].*"))) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	/**

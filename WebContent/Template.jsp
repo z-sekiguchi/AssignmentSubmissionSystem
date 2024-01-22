@@ -33,24 +33,24 @@
 				<ul class="upper">
 					<!-- ユーザーの権限によってメニューの表示を変更する -->
 					<% if(privilege == 1 || privilege == 2) { %>
-						<li>
-							<a href="#"><img src="icon/studentsListButton.png"><span class="usuMenu">受講生一覧</span></a>
+						<li style="background-color: #B62536;">
+							<a href="/AssignmentSubmissionSystem/StudentsList"><img src="icon/studentsListButton.png"><span class="usuMenu">受講生一覧</span></a>
 						</li>
 						<li>
-							<a href="#"><img src="icon/assignmentListButton.png"><span class="usuMenu">課題一覧</span></a>
+							<a href="/AssignmentSubmissionSystem/AssignmentsList"><img src="icon/assignmentListButton.png"><span class="usuMenu">課題一覧</span></a>
 						</li>
 						<li>
-							<a href="#"><img src="icon/userManagementButton.png"><span class="usuMenu">ユーザー管理</span></a>
+							<a href="/AssignmentSubmissionSystem/UserManagement"><img src="icon/userManagementButton.png"><span class="usuMenu">ユーザー管理</span></a>
 						</li>
 					<% } else if(privilege == 3) { %>
 						<li>
-							<a href="#"><img src="icon/assignmentListButton.png"><span class="usuMenu">課題一覧</span></a>
+							<a href="/AssignmentSubmissionSystem/AssignmentsList"><img src="icon/assignmentListButton.png"><span class="usuMenu">課題一覧</span></a>
 						</li>
 					<% } %>
 				</ul>
 				<ul class="lower">
 					<li>
-						<a href="#"><img src="icon/changePasswordButton.png"><span class="usuMenu">パスワード変更</span></a>
+						<a href="/AssignmentSubmissionSystem/ChangePassword"><img src="icon/changePasswordButton.png"><span class="usuMenu">パスワード変更</span></a>
 					</li>
 					<li>
 						<a href="/AssignmentSubmissionSystem/Logout"><img src="icon/logoutButton.png"><span class="usuMenu">ログアウト</span></a>

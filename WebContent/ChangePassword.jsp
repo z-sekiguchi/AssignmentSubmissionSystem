@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>
 <% String sysName = "課題提出システム"; %>
-<% String title = "受講生一覧"; %>
+<% String title = "パスワード変更"; %>
 <% int privilege = Integer.parseInt((String)session.getAttribute("loginUserPrivilege")); %>
 <!DOCTYPE html>
 <html>
@@ -33,7 +34,7 @@
 				<ul class="upper">
 					<!-- ユーザーの権限によってメニューの表示を変更する -->
 					<% if(privilege == 1 || privilege == 2) { %>
-						<li style="background-color: #B62536;">
+						<li>
 							<a href="/AssignmentSubmissionSystem/StudentsList"><img src="icon/studentsListButton.png"><span class="usuMenu">受講生一覧</span></a>
 						</li>
 						<li>
@@ -49,7 +50,7 @@
 					<% } %>
 				</ul>
 				<ul class="lower">
-					<li>
+					<li style="background-color: #B62536;">
 						<a href="/AssignmentSubmissionSystem/ChangePassword"><img src="icon/changePasswordButton.png"><span class="usuMenu">パスワード変更</span></a>
 					</li>
 					<li>
@@ -58,7 +59,29 @@
 				</ul>
 			</aside>
 			<main>
-				<h1>受講生一覧ページ</h1>
+				<h1>パスワード変更ページ</h1>
+				<form action="ChangePassword" method="post">
+					<input type="password" name="defaultPassword">
+					<br>
+					<input type="password" name="password1">
+					<br>
+					<input type="password" name="password2">
+					<br>
+					<input type="submit" value="変更">
+				</form>
+				<% if(request.getAttribute("result") != null) {
+						int res = Integer.parseInt((String)request.getAttribute("result"));
+						@SuppressWarnings("unchecked")
+						ArrayList<String> err = (ArrayList<String>)request.getAttribute("err");
+						if(res == 1) {
+							String msg = (String)request.getAttribute("msg"); %>
+								<p><%= msg %></p>
+						<% } else if(res == -1) {
+							for(String e : err) {
+								%> <p><%= e %></p>
+							<% } %>
+						<% } %>
+				<% } %>
 			</main>
 		</div>
 	</div>

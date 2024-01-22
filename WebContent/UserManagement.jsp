@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% String sysName = "課題提出システム"; %>
-<% String title = "受講生一覧"; %>
+<% String title = "ユーザー管理"; %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.UserBean" %>
 <% int privilege = Integer.parseInt((String)session.getAttribute("loginUserPrivilege")); %>
 <!DOCTYPE html>
 <html>
@@ -33,13 +35,13 @@
 				<ul class="upper">
 					<!-- ユーザーの権限によってメニューの表示を変更する -->
 					<% if(privilege == 1 || privilege == 2) { %>
-						<li style="background-color: #B62536;">
+						<li>
 							<a href="/AssignmentSubmissionSystem/StudentsList"><img src="icon/studentsListButton.png"><span class="usuMenu">受講生一覧</span></a>
 						</li>
 						<li>
 							<a href="/AssignmentSubmissionSystem/AssignmentsList"><img src="icon/assignmentListButton.png"><span class="usuMenu">課題一覧</span></a>
 						</li>
-						<li>
+						<li style="background-color: #B62536;">
 							<a href="/AssignmentSubmissionSystem/UserManagement"><img src="icon/userManagementButton.png"><span class="usuMenu">ユーザー管理</span></a>
 						</li>
 					<% } else if(privilege == 3) { %>
@@ -58,7 +60,76 @@
 				</ul>
 			</aside>
 			<main>
-				<h1>受講生一覧ページ</h1>
+				<h1>ユーザー管理ページ</h1>
+				<form action="UserManagement" method="post">
+					<% if(privilege == 1) { %>
+						<select name="selectPrivilege">
+							<option value="3" selected>受講生</option>
+							<option value="2">講師</option>
+						</select>
+					<% } else { %>
+						<input type="hidden" name="selectPrivilege" value="<%= 3 %>">
+					<% } %>
+					<input type="text" name="userSearchTxt">
+					<input type="submit" value="検索">
+				</form>
+				<table>
+					<thead>
+						<tr>
+							<th colspan="2">受講生一覧</th>
+						</tr>
+					</thead>
+					<% if(request.getAttribute("ubList") != null) {
+						@SuppressWarnings("unchecked")
+						ArrayList<UserBean> ubList = (ArrayList<UserBean>)request.getAttribute("ubList");
+						if(ubList.size() != 0) { %>
+							<tbody>
+								<% for(UserBean ub : ubList) { %>
+									<tr>
+										<td><input type="radio" name="userId" value="<%= ub.getId()%>"></td>
+										<td><%= ub.getName() %></td>
+									</tr>
+								<% } %>
+							</tbody>
+						<% } %>
+					<% } %>
+				</table>
+				<br>
+				<h2>新規登録</h2>
+				<form action="RegistUser" method="post">
+					<label>名前:</label>
+					<input type="Text" name="userName">
+					<br>
+					<label>パスワード:</label>
+					<input type="password" name="password1">
+					<br>
+					<label>パスワード(確認):</label>
+					<input type="password" name="password2">
+					<br>
+					<% if(privilege == 1) { %>
+						<label>管理者権限を付与</label>
+						<input type="radio" name="privilege" value="2" checked>
+						<input type="radio" name="privilege" value="3">
+					<% } else { %>
+						<input type="hidden" name="privilege" value="3">
+					<% } %>
+					<input type="submit" value="登録">
+				</form>
+				<% if(request.getAttribute("result") != null) {
+						int res = Integer.parseInt((String)request.getAttribute("result"));
+						@SuppressWarnings("unchecked")
+						ArrayList<String> err = (ArrayList<String>)request.getAttribute("err");
+						if(res == 1) {
+							String msg = (String)request.getAttribute("msg"); %>
+								<p><%= msg %></p>
+						<% } else if(res == -1) {
+							for(String e : err) {
+								%> <p><%= e %></p>
+							<% } %>
+						<% } %>
+				<% } %>
+				<br>
+
 			</main>
 		</div>
 	</div>

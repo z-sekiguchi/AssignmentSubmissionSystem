@@ -2,8 +2,6 @@ package controller;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,23 +32,20 @@ public class Logout extends HttpServlet {
 		// セッションが存在し、authの値が保存されているかチェックする
 		if(session != null && session.getAttribute("auth") != null) {
 			// セッションが存在し、authの値が保存されている場合
-			System.out.println("auth:" + session.getAttribute("auth"));
 			// セッションを破棄する
 			session.invalidate();
 			// セッションを開始する
 			session = request.getSession(true);
-
-			// jspへ結果のセット
+			// resultとmsgをサーバー側に保存する
 			session.setAttribute("result", "1");
-			request.setAttribute("msg", "ログアウトしました");
+			session.setAttribute("msg", "ログアウトしました");
 		} else {
-			request.setAttribute("result", "-1");
-			request.setAttribute("msg", "既にログアウト済です");
+			// resultとmsgをサーバー側に保存する
+			session.setAttribute("result", "-1");
+			session.setAttribute("msg", "既にログアウト済です");
 		}
-		// 画面遷移(フォワードを使ってJSPに表示を切り替える)
-		ServletContext app = this.getServletContext();
-		RequestDispatcher dispatcher = app.getRequestDispatcher("/Login.jsp");
-		dispatcher.forward(request, response);
+		// ログイン画面へリダイレクト
+		response.sendRedirect("/AssignmentSubmissionSystem/Login");
 	}
 
 	/**

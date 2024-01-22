@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% String sysName = "課題提出システム"; %>
-<% String title = "受講生一覧"; %>
+<% String title = "課題一覧"; %>
 <% int privilege = Integer.parseInt((String)session.getAttribute("loginUserPrivilege")); %>
 <!DOCTYPE html>
 <html>
@@ -33,7 +33,7 @@
 				<ul class="upper">
 					<!-- ユーザーの権限によってメニューの表示を変更する -->
 					<% if(privilege == 1 || privilege == 2) { %>
-						<li style="background-color: #B62536;">
+						<li>
 							<a href="/AssignmentSubmissionSystem/StudentsList"><img src="icon/studentsListButton.png"><span class="usuMenu">受講生一覧</span></a>
 						</li>
 						<li>
@@ -43,7 +43,7 @@
 							<a href="/AssignmentSubmissionSystem/UserManagement"><img src="icon/userManagementButton.png"><span class="usuMenu">ユーザー管理</span></a>
 						</li>
 					<% } else if(privilege == 3) { %>
-						<li>
+						<li style="background-color: #B62536;">
 							<a href="/AssignmentSubmissionSystem/AssignmentsList"><img src="icon/assignmentListButton.png"><span class="usuMenu">課題一覧</span></a>
 						</li>
 					<% } %>
@@ -58,7 +58,7 @@
 				</ul>
 			</aside>
 			<main>
-				<h1>受講生一覧ページ</h1>
+				<h1>課題一覧ページ(一般ユーザー)</h1>
 			</main>
 		</div>
 	</div>

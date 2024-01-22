@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>AssignmentSubmissionSystem</display-name>
   <welcome-file-list>
-	<welcome-file>Login</welcome-file>
+    <welcome-file>Login</welcome-file>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
@@ -49,5 +49,45 @@
   <servlet-mapping>
     <servlet-name>Logout</servlet-name>
     <url-pattern>/Logout</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AssignmentsList</display-name>
+    <servlet-name>AssignmentsList</servlet-name>
+    <servlet-class>controller.AssignmentsList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AssignmentsList</servlet-name>
+    <url-pattern>/AssignmentsList</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserManagement</display-name>
+    <servlet-name>UserManagement</servlet-name>
+    <servlet-class>controller.UserManagement</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserManagement</servlet-name>
+    <url-pattern>/UserManagement</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ChangePassword</display-name>
+    <servlet-name>ChangePassword</servlet-name>
+    <servlet-class>controller.ChangePassword</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChangePassword</servlet-name>
+    <url-pattern>/ChangePassword</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RegistUser</display-name>
+    <servlet-name>RegistUser</servlet-name>
+    <servlet-class>controller.RegistUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegistUser</servlet-name>
+    <url-pattern>/RegistUser</url-pattern>
   </servlet-mapping>
 </web-app>

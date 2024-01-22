@@ -36,6 +36,21 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// セッションを取得する
+		HttpSession session = request.getSession(false);
+
+		// セッションが存在し、authの値が保存されているかチェックする
+		if(session != null && session.getAttribute("auth") != null && session.getAttribute("loginUserPrivilege") != null) {
+			int privilege = Integer.parseInt((String)session.getAttribute("loginUserPrivilege"));
+			// システム管理者、管理者の場合
+			if(privilege == SYSTEM_ADMINISTRATOR || privilege == ADMINISTRATOR) {
+				response.sendRedirect("/AssignmentSubmissionSystem/StudentsList");
+			} else if(privilege == GENERAL_USER) {
+				response.sendRedirect("/AssignmentSubmissionSystem/AssignmentsList");
+			}
+			return;
+		}
+
 		// 画面遷移(フォワードを使ってJSPに表示を切り替える)
 		ServletContext app = this.getServletContext();
 		RequestDispatcher dispatcher = app.getRequestDispatcher("/Login.jsp");
@@ -88,7 +103,7 @@ public class Login extends HttpServlet {
 			if(privilege == SYSTEM_ADMINISTRATOR || privilege == ADMINISTRATOR) {
 				response.sendRedirect("/AssignmentSubmissionSystem/StudentsList");
 			} else if(privilege == GENERAL_USER) {
-				response.sendRedirect("/AssignmentSubmissionSystem/Login");
+				response.sendRedirect("/AssignmentSubmissionSystem/AssignmentsList");
 			}
 			return;
 		}
