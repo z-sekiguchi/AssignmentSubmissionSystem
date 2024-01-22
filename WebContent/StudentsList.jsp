@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <% String sysName = "課題提出システム"; %>
 <% String title = "テンプレート"; %>
+<% int privilege = Integer.parseInt((String)session.getAttribute("loginUserPrivilege")); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,8 +21,8 @@
 		<img src="https://zeruqacademy.jp/wp/wp-content/themes/zeruqacademy/Templates/Images/logo.svg" alt="ゼルクアカデミー" >
 		<h1>課題提出システム</h1>
 		<div class="loginUserInfo">
-			<p>山田太郎</p>
-			<p>ID: zeruq01</p>
+			<p><%= (String)session.getAttribute("loginUserName") %>(<%= privilege %>)</p>
+			<p>ID: <%= (String)session.getAttribute("loginUserId") %></p>
 		</div>
 	</header>
 	<div class="main-container">
@@ -30,22 +31,29 @@
 				<input type="checkbox" id="menuStatus" hidden checked>
 				<h3 id="toggleBtn"><span class="usuMenu">メニュー</span><span class="menuSize usuMenu">◀</span><span class="menuSize redMenu" style="display:none">▶</span></h3>
 				<ul class="upper">
-					<li style="background-color: #B62536;">
-						<a href="#"><img src="icon/studentsListButton.png"><span class="usuMenu">受講生一覧</span></a>
-					</li>
-					<li>
-						<a href="#"><img src="icon/assignmentListButton.png"><span class="usuMenu">課題一覧</span></a>
-					</li>
-					<li>
-						<a href="#"><img src="icon/userManagementButton.png"><span class="usuMenu">ユーザー管理</span></a>
-					</li>
+					<!-- ユーザーの権限によってメニューの表示を変更する -->
+					<% if(privilege == 1 || privilege == 2) { %>
+						<li style="background-color: #B62536;">
+							<a href="#"><img src="icon/studentsListButton.png"><span class="usuMenu">受講生一覧</span></a>
+						</li>
+						<li>
+							<a href="#"><img src="icon/assignmentListButton.png"><span class="usuMenu">課題一覧</span></a>
+						</li>
+						<li>
+							<a href="#"><img src="icon/userManagementButton.png"><span class="usuMenu">ユーザー管理</span></a>
+						</li>
+					<% } else if(privilege == 3) { %>
+						<li>
+							<a href="#"><img src="icon/assignmentListButton.png"><span class="usuMenu">課題一覧</span></a>
+						</li>
+					<% } %>
 				</ul>
 				<ul class="lower">
 					<li>
 						<a href="#"><img src="icon/changePasswordButton.png"><span class="usuMenu">パスワード変更</span></a>
 					</li>
 					<li>
-						<a href="#"><img src="icon/logoutButton.png"><span class="usuMenu">ログアウト</span></a>
+						<a href="/AssignmentSubmissionSystem/Logout"><img src="icon/logoutButton.png"><span class="usuMenu">ログアウト</span></a>
 					</li>
 				</ul>
 			</aside>

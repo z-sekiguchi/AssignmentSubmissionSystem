@@ -21,6 +21,12 @@
 		<h1>課題提出システム</h1>
 	</header>
 	<div class="main-container">
+		<%-- Servletから受けとった結果を元に画面表示 --%>
+		<% if(request.getAttribute("result") != null) {
+			if((int)request.getAttribute("result") == 1) { %>
+				<%= (String)request.getAttribute("msg") %>
+			<% } %>
+		<% } %>
 		<form action="" method="post" class="login">
 			<h2>ログイン画面</h2>
 			<div class="loginId">

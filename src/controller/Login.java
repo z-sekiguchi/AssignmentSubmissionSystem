@@ -19,6 +19,11 @@ import model.UserDao;
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	// フィールド宣言
+	private int SYSTEM_ADMINISTRATOR = 1;		// システム管理者
+	private int ADMINISTRATOR = 2;				// 管理者
+	private int GENERAL_USER = 3;				// 一般ユーザー
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -77,9 +82,14 @@ public class Login extends HttpServlet {
 			session.setAttribute("auth", "true");
 			session.setAttribute("loginUserId", ub.getId());
 			session.setAttribute("loginUserName", ub.getName());
-			session.setAttribute("loginUserPrivilege", ub.getPrivilege());
+			int privilege = ub.getPrivilege();
+			session.setAttribute("loginUserPrivilege", String.valueOf(privilege));
 			// システム管理者、管理者の場合
-			response.sendRedirect("/AssignmentSubmissionSystem/StudentsList");
+			if(privilege == SYSTEM_ADMINISTRATOR || privilege == ADMINISTRATOR) {
+				response.sendRedirect("/AssignmentSubmissionSystem/StudentsList");
+			} else if(privilege == GENERAL_USER) {
+				response.sendRedirect("/AssignmentSubmissionSystem/Login");
+			}
 			return;
 		}
 		// jspへ結果のセット
