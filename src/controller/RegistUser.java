@@ -70,10 +70,6 @@ public class RegistUser extends HttpServlet {
 		int privilege = request.getParameter("privilege") == null ?
 						0 : Integer.parseInt((String)request.getParameter("privilege"));
 
-		System.out.println(name);
-		System.out.println(password1);
-		System.out.println(password2);
-
 		ArrayList<String> err = new ArrayList<>();
 
 		// 全て入力されているかチェックする
@@ -135,7 +131,7 @@ public class RegistUser extends HttpServlet {
 
 		if(err.size() == 0) {
 			request.setAttribute("result", "1");
-			request.setAttribute("msg", "ユーザー登録に成功しました");
+			request.setAttribute("msg", "ユーザー登録に成功しました。");
 		} else {
 			request.setAttribute("result", "-1");
 			request.setAttribute("err", err);

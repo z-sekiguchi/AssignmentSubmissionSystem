@@ -73,27 +73,43 @@
 					<input type="text" name="userSearchTxt">
 					<input type="submit" value="検索">
 				</form>
-				<table>
-					<thead>
-						<tr>
-							<th colspan="2">受講生一覧</th>
-						</tr>
-					</thead>
-					<% if(request.getAttribute("ubList") != null) {
-						@SuppressWarnings("unchecked")
-						ArrayList<UserBean> ubList = (ArrayList<UserBean>)request.getAttribute("ubList");
-						if(ubList.size() != 0) { %>
-							<tbody>
-								<% for(UserBean ub : ubList) { %>
-									<tr>
-										<td><input type="radio" name="userId" value="<%= ub.getId()%>"></td>
-										<td><%= ub.getName() %></td>
-									</tr>
-								<% } %>
-							</tbody>
+				<form action="DeleteUser" method="post">
+					<table>
+						<thead>
+							<tr>
+								<th colspan="2">受講生一覧</th>
+							</tr>
+						</thead>
+						<% if(request.getAttribute("ubList") != null) {
+							@SuppressWarnings("unchecked")
+							ArrayList<UserBean> ubList = (ArrayList<UserBean>)request.getAttribute("ubList");
+							if(ubList.size() != 0) { %>
+								<tbody>
+									<% for(UserBean ub : ubList) { %>
+										<tr>
+											<td><input type="radio" name="userId" value="<%= ub.getId()%>"></td>
+											<td><%= ub.getName() %></td>
+										</tr>
+									<% } %>
+								</tbody>
+							<% } %>
 						<% } %>
-					<% } %>
-				</table>
+					</table>
+					<input type="submit" value="削除">
+				</form>
+				<% if(request.getAttribute("deleteResult") != null) {
+						int res = Integer.parseInt((String)request.getAttribute("deleteResult"));
+						@SuppressWarnings("unchecked")
+						ArrayList<String> err = (ArrayList<String>)request.getAttribute("err");
+						if(res == 1) {
+							String msg = (String)request.getAttribute("msg"); %>
+								<p><%= msg %></p>
+						<% } else if(res == -1) {
+							for(String e : err) {
+								%> <p><%= e %></p>
+							<% } %>
+						<% } %>
+				<% } %>
 				<br>
 				<h2>新規登録</h2>
 				<form action="RegistUser" method="post">
@@ -109,7 +125,9 @@
 					<% if(privilege == 1) { %>
 						<label>管理者権限を付与</label>
 						<input type="radio" name="privilege" value="2" checked>
+						<label>する</label>
 						<input type="radio" name="privilege" value="3">
+						<label>しない</label>
 					<% } else { %>
 						<input type="hidden" name="privilege" value="3">
 					<% } %>

@@ -15,12 +15,11 @@ import model.UserBean;
 import model.UserDao;
 
 /**
- * Servlet implementation class UserManagement
+ * Servlet implementation class DeleteUser
  */
-public class UserManagement extends HttpServlet {
+public class DeleteUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	// フィールド宣言
 	private int SYSTEM_ADMINISTRATOR = 1;		// システム管理者
 	private int ADMINISTRATOR = 2;				// 管理者
 	private int GENERAL_USER = 3;				// 一般ユーザー
@@ -28,7 +27,7 @@ public class UserManagement extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserManagement() {
+    public DeleteUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,30 +36,8 @@ public class UserManagement extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// セッションを取得する
-		HttpSession session = request.getSession(false);
-
-		// ログインしていないかチェックする
-		if(session == null || session.getAttribute("auth") == null) {
-			// ログインしていない場合、ログイン画面へ遷移する
-			// jspへ結果のセット
-			request.setAttribute("result", -2);
-			// 画面遷移(フォワードを使ってJSPに表示を切り替える)
-			ServletContext app = this.getServletContext();
-			RequestDispatcher dispatcher = app.getRequestDispatcher("/Login.jsp");
-			dispatcher.forward(request, response);
-			return;
-		};
-
-		UserDao ud = new UserDao();
-		ArrayList<UserBean> ubList = ud.selectSearchDao("", GENERAL_USER);
-
-		request.setAttribute("ubList", ubList);
-
-		// 画面遷移(フォワードを使ってJSPに表示を切り替える)
-		ServletContext app = this.getServletContext();
-		RequestDispatcher dispatcher = app.getRequestDispatcher("/UserManagement.jsp");
-		dispatcher.forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -87,9 +64,25 @@ public class UserManagement extends HttpServlet {
 
 		UserDao ud = new UserDao();
 
-		String name = (String)request.getParameter("userSearchTxt");
-		int privilege = Integer.parseInt((String)request.getParameter("selectPrivilege"));
-		ArrayList<UserBean> ubList = ud.selectSearchDao(name, privilege);
+		String userId = (String)request.getParameter("userId");
+
+		ArrayList<String> err = new ArrayList<>();
+
+		String path = this.getServletContext().getRealPath("folders");
+		int num = ud.deleteDao(userId, path);
+		if(num != 1) {
+			err.add("指定されたユーザーは既に削除されているか存在しません。");
+		}
+
+		if(err.size() == 0) {
+			request.setAttribute("deleteResult", "1");
+			request.setAttribute("msg", "ユーザーの削除に成功しました。");
+		} else {
+			request.setAttribute("deleteResult", "-1");
+			request.setAttribute("err", err);
+		}
+
+		ArrayList<UserBean> ubList = ud.selectSearchDao("", GENERAL_USER);
 
 		request.setAttribute("ubList", ubList);
 
